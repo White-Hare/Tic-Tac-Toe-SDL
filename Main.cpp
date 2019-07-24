@@ -276,7 +276,6 @@ int get_best_move(int* x, int* y, char symbol)
 			if (!board[py][px]) {
 				cpy_board[py][px] = 'x';
 
-				std::cout << is_winning('x', cpy_board) << std::endl;
 				if (is_winning('x', cpy_board))
 				{
 				    *x = px;
