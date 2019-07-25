@@ -135,6 +135,10 @@ int main(int argc,char* args[])
 		}
 	}
 
+	Players winner;
+	bool winner_setted = false, victory_of_o = false, victory_of_x = false;
+
+
 	bool running = true;
     while(running)
     {
@@ -155,8 +159,9 @@ int main(int argc,char* args[])
 							board[y][x] = NULL;
 						}
 					}
-
-
+					winner_setted = false;
+					victory_of_o = false;
+					victory_of_x = false;
 				}
 			}
 		}
@@ -168,7 +173,7 @@ int main(int argc,char* args[])
 
 		DrawBoard(renderer, 0, 0);
 
-		if (currentPlayer == PLAYER2)
+		if (currentPlayer == PLAYER2 && !winner_setted)
 		{
 			int x, y;
 			get_best_move(&x, &y,'x');
@@ -179,28 +184,36 @@ int main(int argc,char* args[])
 		}
 
 
-		for (int i = 0; i < 9; i++) {
-			if (event->button.button == SDL_BUTTON_LEFT && currentPlayer==PLAYER1) {
-				int x, y;
-				SDL_GetMouseState(&x, &y);
-			    cells[i]->place(x,y);
+        for (int i = 0; i < 9; i++) {
+            if(!winner_setted)
+				if (event->button.button == SDL_BUTTON_LEFT && currentPlayer == PLAYER1) {
+					int x, y;
+					SDL_GetMouseState(&x, &y);
+					cells[i]->place(x, y);
+				}
+
+				cells[i]->render(renderer);
 			}
-
-			cells[i]->render(renderer);
-		}
-
-
-		bool victory_of_o = is_winning('o', board);
-		bool victory_of_x = is_winning('x', board);
-
-
-		if (currentPlayer == PLAYER2 && victory_of_o)//player changing happens before this function
-			SDL_RenderCopy(renderer, player1_victory_text, NULL,text_pos );
-            
 		
-		else if (currentPlayer == PLAYER1 && victory_of_x)
-			SDL_RenderCopy(renderer, player2_victory_text, NULL, text_pos);
 
+
+        if(!winner_setted)
+        {
+			 victory_of_o = is_winning('o', board);
+			 victory_of_x = is_winning('x', board);
+        }
+
+
+		if (victory_of_o)//player changing happens before this function
+		{
+			SDL_RenderCopy(renderer, player1_victory_text, NULL, text_pos);
+			winner_setted = true;
+		}
+		
+		if (victory_of_x) {
+			SDL_RenderCopy(renderer, player2_victory_text, NULL, text_pos);
+			winner_setted = true;
+		}
 		bool all_cells_full=true;
         for (int i=0;i<9;i++)
 			if (board[i / 3][i % 3] == NULL) {
