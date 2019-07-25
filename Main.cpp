@@ -123,8 +123,8 @@ int main(int argc,char* args[])
 	XOX *cells[9];
 
 	SDL_Rect* text_pos =new SDL_Rect { 100,80,WIDTH/2,HEIGHT/2 };
-	SDL_Texture* player1_victory_text = writeToTextue(renderer, font, "PLAYER 1 WIN PRESS R TO RESTART OR ESC TO QUIT", SDL_Color{ 0, 0, 200 });
-	SDL_Texture* player2_victory_text = writeToTextue(renderer, font, "PLAYER 2 WIN PRESS R TO RESTART OR ESC TO QUIT", SDL_Color{ 200, 0, 0 });
+	SDL_Texture* player1_victory_text = writeToTextue(renderer, font, "PLAYER 1 WIN PRESS R TO RESTART OR ESC TO QUIT", SDL_Color{ 200, 0, 0 });
+	SDL_Texture* player2_victory_text = writeToTextue(renderer, font, "PLAYER 2 WIN PRESS R TO RESTART OR ESC TO QUIT", SDL_Color{ 0, 0, 200 });
 	SDL_Texture* tie_text = writeToTextue(renderer, font, "DRAW PRESS R TO RESTART OR ESC TO QUIT", SDL_Color{ 0, 0, 0 });
 
 
